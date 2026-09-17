@@ -1,6 +1,6 @@
 # Analisis Supervised dan Unsupervised Learning
 
-## 📌 Overview
+## Overview
 
 Repository ini berisi hasil pembelajaran dan eksperimen **Machine Learning menggunakan Python dan Google Colab** berdasarkan materi *Introduction to Machine Learning with Python*, khususnya Chapter 2 tentang **Supervised Learning** dan Chapter 3 tentang **Unsupervised Learning and Preprocessing**.
 
@@ -15,7 +15,7 @@ Buku menempatkan KNN, Linear Models, Naive Bayes, Decision Trees, Ensembles of D
 
 ---
 
-# 🧠 1. Analisis Supervised Learning
+# 1. Analisis Supervised Learning
 
 ## 1.1 Konsep Dasar
 
@@ -161,7 +161,7 @@ Buku menjelaskan bahwa neural networks dapat membangun model yang sangat komplek
 
 ---
 
-# 🔎 3. Analisis Antar-Model Supervised
+# 3. Analisis Antar-Model Supervised
 
 Jika dibandingkan, ketujuh model supervised yang dicoba menunjukkan bahwa terdapat **trade-off antara kesederhanaan, fleksibilitas, interpretasi, dan kebutuhan komputasi**.
 
@@ -191,7 +191,7 @@ Pendekatan ini juga sesuai dengan pembahasan buku yang menyarankan untuk memulai
 
 ---
 
-# 🧩 4. Analisis Unsupervised Learning
+# 4. Analisis Unsupervised Learning
 
 ## 4.1 Konsep Dasar
 
@@ -303,7 +303,7 @@ Namun, hasil DBSCAN sangat dipengaruhi oleh parameter seperti `eps` dan `min_sam
 
 ---
 
-# ⚖️ 7. Perbandingan Unsupervised Learning
+# 7. Perbandingan Unsupervised Learning
 
 | Algoritma     | Pendekatan                | Hal yang Dipelajari                            |
 | ------------- | ------------------------- | ---------------------------------------------- |
@@ -318,7 +318,7 @@ Buku sendiri mengelompokkan k-Means, Agglomerative Clustering, dan DBSCAN sebaga
 
 ---
 
-# 🔬 8. Analisis Perbandingan Supervised vs Unsupervised
+# 8. Analisis Perbandingan Supervised vs Unsupervised
 
 Perbedaan paling mendasar yang saya pahami setelah melakukan praktik adalah **tujuan pembelajarannya**.
 
@@ -342,7 +342,7 @@ Pada supervised learning, score seperti accuracy atau R² dapat digunakan tergan
 
 ---
 
-# 📈 9. Analisis Kompleksitas Model
+# 9. Analisis Kompleksitas Model
 
 Dari seluruh eksperimen, saya melihat adanya pola bahwa **semakin fleksibel sebuah model, semakin besar pula kebutuhan untuk mengatur kompleksitasnya**.
 
@@ -382,7 +382,7 @@ Evaluasi kembali
 
 ---
 
-# 🧠 10. Hal yang Paling Saya Pahami dari Praktikum
+# 10. Hal yang Paling Saya Pahami dari Praktikum
 
 Setelah mencoba 13 algoritma, saya mendapatkan beberapa pemahaman yang lebih jelas dibandingkan hanya mempelajari teori.
 
@@ -418,7 +418,7 @@ Saya perlu mengetahui:
 
 ---
 
-# 🎯 11. Kesimpulan
+# 11. Kesimpulan
 
 Eksperimen terhadap 13 algoritma memberikan gambaran bahwa Machine Learning memiliki berbagai pendekatan untuk menyelesaikan permasalahan yang berbeda.
 

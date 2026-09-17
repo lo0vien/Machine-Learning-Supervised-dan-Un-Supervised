@@ -1,252 +1,439 @@
 # Analisis Supervised dan Unsupervised Learning
 
-## 📌 Deskripsi
+## 📌 Overview
 
-Repository ini berisi hasil pembelajaran dan implementasi beberapa algoritma **Machine Learning** menggunakan Python dan Google Colab. Materi yang dipelajari mengacu pada buku *Introduction to Machine Learning with Python*, khususnya **Chapter 2: Supervised Learning** dan **Chapter 3: Unsupervised Learning and Preprocessing**.
+Repository ini berisi hasil pembelajaran dan eksperimen **Machine Learning menggunakan Python dan Google Colab** berdasarkan materi *Introduction to Machine Learning with Python*, khususnya Chapter 2 tentang **Supervised Learning** dan Chapter 3 tentang **Unsupervised Learning and Preprocessing**.
 
-Pada praktiknya, saya mencoba menjalankan berbagai algoritma menggunakan dataset dan contoh yang digunakan dalam pembelajaran. Dari eksperimen tersebut, saya dapat melihat bagaimana setiap algoritma bekerja, bagaimana hasil prediksi atau pengelompokan terbentuk, serta bagaimana karakteristik setiap model berbeda satu sama lain.
+Eksperimen dilakukan terhadap 13 algoritma yang terbagi menjadi:
 
-Secara keseluruhan terdapat **13 model/algoritma** yang dipelajari, terdiri dari **7 algoritma Supervised Learning** dan **6 algoritma Unsupervised Learning**.
+* **7 Supervised Learning**
+* **6 Unsupervised Learning**
 
----
+Tujuan dari praktikum ini bukan hanya untuk mengetahui cara menjalankan algoritma menggunakan `scikit-learn`, tetapi juga untuk memahami **perbedaan cara kerja model, pengaruh parameter, karakteristik data yang sesuai, serta bagaimana menginterpretasikan hasil eksperimen**.
 
-# 🧠 1. Supervised Learning
-
-**Supervised Learning** merupakan pendekatan Machine Learning ketika model belajar menggunakan data yang memiliki **target atau label**. Model belajar hubungan antara fitur input dan target sehingga dapat digunakan untuk melakukan prediksi terhadap data baru.
-
-Dalam praktik yang dilakukan, sebagian besar algoritma supervised diuji menggunakan proses **training dan testing**. Hal ini membantu melihat apakah model tidak hanya mampu mempelajari data training, tetapi juga dapat melakukan generalisasi terhadap data yang belum pernah dilihat sebelumnya.
-
-Buku juga menjelaskan pentingnya generalisasi, overfitting, dan underfitting. Model yang terlalu fokus terhadap data training dapat mengalami overfitting sehingga performanya terhadap data baru menjadi kurang baik.
-
-### Model yang Dipelajari
-
-| No. | Model               | Fokus Pembelajaran                           |
-| --- | ------------------- | -------------------------------------------- |
-| 1   | K-Nearest Neighbors | Klasifikasi berdasarkan kedekatan data       |
-| 2   | Linear Models       | Hubungan linear untuk klasifikasi/regresi    |
-| 3   | Naive Bayes         | Klasifikasi berbasis probabilitas            |
-| 4   | Decision Trees      | Pengambilan keputusan berbentuk if/else      |
-| 5   | Random Forest       | Gabungan beberapa decision tree              |
-| 6   | Kernelized SVM      | Pemisahan kelas menggunakan kernel           |
-| 7   | Neural Networks     | Pembelajaran pola menggunakan jaringan saraf |
+Buku menempatkan KNN, Linear Models, Naive Bayes, Decision Trees, Ensembles of Decision Trees, Kernelized SVM, dan Neural Networks sebagai algoritma supervised. Sementara PCA, NMF, t-SNE, k-Means, Agglomerative Clustering, dan DBSCAN dibahas dalam bagian unsupervised learning.
 
 ---
 
-## 1.1 K-Nearest Neighbors (KNN)
+# 🧠 1. Analisis Supervised Learning
 
-KNN merupakan algoritma yang melakukan prediksi berdasarkan beberapa data yang memiliki jarak paling dekat dengan data yang akan diprediksi.
+## 1.1 Konsep Dasar
 
-Dari percobaan di Google Colab, saya memahami bahwa **nilai K sangat memengaruhi hasil model**. Nilai K yang kecil membuat model lebih sensitif terhadap data di sekitarnya, sedangkan nilai K yang lebih besar membuat keputusan model menjadi lebih umum.
+Pada supervised learning, model belajar dari data yang mempunyai **fitur dan target**. Artinya, selama proses training model memiliki informasi mengenai jawaban yang benar.
 
-KNN cukup mudah dipahami karena konsep dasarnya hanya mencari tetangga terdekat. Namun, model ini dapat menjadi kurang praktis ketika jumlah data semakin besar karena proses prediksi perlu mempertimbangkan jarak terhadap data training.
+Dari eksperimen yang dilakukan, pola umum supervised learning yang saya temukan adalah:
 
----
+```text
+Dataset
+   ↓
+Feature + Target
+   ↓
+Training Data
+   ↓
+Model belajar pola
+   ↓
+Testing Data
+   ↓
+Prediksi
+   ↓
+Evaluasi
+```
 
-## 1.2 Linear Models
+Hal yang menurut saya paling penting dari proses ini adalah **model tidak cukup hanya memiliki nilai training yang tinggi**. Model juga harus mampu bekerja pada data yang belum pernah dilihat.
 
-Linear Models mencoba menemukan hubungan linear antara fitur dan target. Pada praktiknya saya mencoba **Linear Regression** serta **Ridge Regression**.
-
-Dari eksperimen tersebut, saya dapat melihat nilai **training score dan test score** untuk mengetahui kemampuan model. Ridge juga memperkenalkan parameter `alpha` yang digunakan untuk mengatur regularisasi.
-
-Hal yang saya pahami adalah bahwa model linear relatif sederhana dan cocok digunakan sebagai salah satu model awal ketika menghadapi dataset baru. Buku juga menyebutkan linear models sebagai salah satu algoritma yang baik untuk dicoba terlebih dahulu, terutama pada dataset besar atau berdimensi tinggi.
-
----
-
-## 1.3 Naive Bayes
-
-Naive Bayes merupakan algoritma klasifikasi yang menggunakan pendekatan probabilitas. Pada praktiknya saya mencoba **Gaussian Naive Bayes** dan melihat konsep **Bernoulli Naive Bayes** melalui data biner.
-
-Hal yang menarik dari Naive Bayes adalah proses pelatihannya relatif cepat dan konsepnya cukup sederhana. Model ini juga dapat digunakan pada data berdimensi tinggi.
-
-Dari pembelajaran, saya memahami bahwa Naive Bayes lebih berfokus pada perhitungan probabilitas dibandingkan mencari batas keputusan yang kompleks. Buku menjelaskan bahwa Naive Bayes sangat cepat dan dapat menjadi baseline yang baik, khususnya untuk dataset berukuran besar dan berdimensi tinggi.
-
----
-
-## 1.4 Decision Trees
-
-Decision Tree membuat keputusan menggunakan struktur seperti pohon. Setiap node berisi pertanyaan atau kondisi tertentu, kemudian proses dilanjutkan sampai mencapai leaf yang berisi hasil prediksi.
-
-Pada praktiknya saya menggunakan dataset **two moons** dan mencoba mengatur parameter `max_depth`.
-
-Dari eksperimen tersebut saya memahami bahwa semakin kompleks pohon yang dibuat, model dapat semakin mengikuti pola data training. Oleh karena itu, pengaturan kedalaman pohon penting untuk menghindari model yang terlalu kompleks.
-
-Decision Tree memiliki kelebihan karena hasilnya relatif mudah divisualisasikan dan dijelaskan. Buku menggambarkan prosesnya sebagai rangkaian pertanyaan if/else yang dipelajari dari data menggunakan supervised learning.
+Hal tersebut berkaitan dengan konsep **generalization**. Jika model terlalu menyesuaikan diri terhadap training data, maka model dapat mengalami **overfitting**. Sebaliknya, jika model terlalu sederhana dan tidak mampu menangkap pola data, model dapat mengalami **underfitting**.
 
 ---
 
-## 1.5 Ensembles of Decision Trees — Random Forest
+# 2. Analisis Setiap Model Supervised
 
-Random Forest merupakan ensemble yang menggunakan beberapa decision tree, kemudian menggabungkan hasil dari tree-tree tersebut.
+## 2.1 K-Nearest Neighbors
 
-Dalam praktiknya saya mencoba **Random Forest** dan melihat bagaimana penggunaan banyak tree dapat menghasilkan model yang lebih kuat dibandingkan hanya menggunakan satu decision tree.
+KNN memiliki pendekatan yang cukup intuitif. Model tidak membangun aturan klasifikasi yang kompleks, tetapi melihat **tetangga terdekat** dari data yang akan diprediksi.
 
-Saya memahami bahwa kelebihan utama Random Forest adalah lebih stabil terhadap perubahan data dibandingkan satu decision tree. Namun, modelnya menjadi lebih sulit untuk dijelaskan secara langsung karena terdiri dari banyak tree.
+Dari eksperimen KNN, saya memahami bahwa parameter `n_neighbors` menjadi bagian yang penting. Ketika jumlah tetangga kecil, model cenderung mengikuti pola lokal data. Akibatnya, model dapat menjadi lebih sensitif terhadap perubahan atau noise.
 
-Buku juga menjelaskan Random Forest sebagai model yang kuat dan robust serta tidak memerlukan scaling data.
+Sebaliknya, ketika jumlah tetangga diperbesar, keputusan model menjadi lebih umum karena mempertimbangkan lebih banyak data.
 
----
+Hal ini menunjukkan adanya hubungan antara **kompleksitas model dan generalisasi**. KNN dengan nilai K yang kecil dapat menjadi sangat fleksibel, sedangkan nilai K yang lebih besar membuat model lebih sederhana.
 
-## 1.6 Kernelized Support Vector Machines (SVM)
+Menurut materi buku, KNN juga cocok digunakan sebagai baseline terutama pada dataset yang relatif kecil karena konsepnya mudah dijelaskan.
 
-Kernelized SVM digunakan untuk mencari batas pemisah antar kelas, termasuk ketika hubungan antar kelas tidak dapat dipisahkan dengan garis lurus.
-
-Dalam praktiknya saya menggunakan **RBF kernel** dan mencoba parameter seperti `C` dan `gamma`.
-
-Dari percobaan tersebut saya memahami bahwa parameter SVM sangat berpengaruh terhadap bentuk decision boundary. `C` dan `gamma` dapat membuat model menjadi lebih sederhana atau lebih kompleks.
-
-SVM merupakan algoritma yang cukup powerful, tetapi membutuhkan perhatian terhadap scaling data dan pemilihan parameter.
+**Pemahaman dari eksperimen:** KNN mudah digunakan dan mudah dipahami, tetapi pemilihan K sangat menentukan perilaku model.
 
 ---
 
-## 1.7 Neural Networks / Deep Learning
+## 2.2 Linear Models
 
-Neural Network menggunakan beberapa neuron yang disusun dalam layer untuk mempelajari pola dari data. Pada praktiknya saya menggunakan **MLPClassifier** dan mencoba konfigurasi jumlah hidden layer, jumlah neuron, fungsi aktivasi, serta nilai `alpha`.
+Linear Models memiliki pendekatan yang berbeda dari KNN. Model mencoba menemukan hubungan matematis yang relatif sederhana antara fitur dan target.
 
-Dari percobaan ini saya memahami bahwa Neural Network memiliki kemampuan untuk mempelajari pola yang lebih kompleks dibandingkan model sederhana. Namun, semakin kompleks arsitekturnya, semakin penting pemilihan parameter dan preprocessing data.
+Dalam eksperimen saya menggunakan **Linear Regression** dan **Ridge Regression**. Dari sini terlihat bahwa model linear dapat digunakan sebagai model awal karena struktur modelnya relatif sederhana.
 
-Saya juga melihat bahwa perubahan jumlah hidden layer dan neuron dapat mengubah decision boundary yang dihasilkan model. Buku menjelaskan bahwa neural networks mampu membangun model yang sangat kompleks, tetapi sensitif terhadap scaling data dan pemilihan parameter.
+Eksperimen Ridge memberikan pemahaman tambahan mengenai **regularisasi**. Parameter `alpha` digunakan untuk mengontrol seberapa kuat regularisasi diberikan.
 
----
+Analisis yang saya dapatkan adalah semakin kompleks permasalahan, model linear belum tentu mampu mengikuti seluruh pola data. Namun, kesederhanaan model menjadi keuntungan ketika data berukuran besar atau memiliki banyak fitur.
 
-# 🔍 2. Unsupervised Learning
+Buku juga menyebutkan linear models sebagai salah satu model pertama yang baik untuk dicoba pada dataset baru.
 
-Berbeda dengan supervised learning, **Unsupervised Learning tidak menggunakan target/label sebagai acuan utama dalam proses pembelajaran**.
-
-Tujuannya bukan memprediksi label yang sudah diketahui, tetapi menemukan struktur, pola, representasi, atau kelompok yang terdapat di dalam data.
-
-Pada Chapter 3, materi unsupervised learning mencakup beberapa pendekatan, yaitu **dimensionality reduction, feature extraction, manifold learning, dan clustering**. Buku menempatkan PCA, NMF, t-SNE, k-Means, Agglomerative Clustering, dan DBSCAN dalam bagian ini.
-
-### Model yang Dipelajari
-
-| No. | Model                    | Fokus Pembelajaran                 |
-| --- | ------------------------ | ---------------------------------- |
-| 1   | PCA                      | Reduksi dimensi                    |
-| 2   | NMF                      | Ekstraksi/representasi fitur       |
-| 3   | t-SNE                    | Visualisasi data berdimensi tinggi |
-| 4   | k-Means                  | Clustering berbasis centroid       |
-| 5   | Agglomerative Clustering | Hierarchical clustering            |
-| 6   | DBSCAN                   | Clustering berdasarkan kepadatan   |
+**Pemahaman dari eksperimen:** model sederhana bukan berarti tidak berguna. Linear Models dapat menjadi baseline untuk mengetahui apakah masalah yang dihadapi sudah dapat diselesaikan dengan hubungan yang relatif sederhana.
 
 ---
 
-## 2.1 Principal Component Analysis (PCA)
+## 2.3 Naive Bayes
 
-PCA digunakan untuk melakukan **reduksi dimensi** dengan mengubah data menjadi representasi baru yang lebih sederhana.
+Naive Bayes menggunakan pendekatan probabilistik untuk melakukan klasifikasi.
 
-Dari praktik yang dilakukan, saya memahami bahwa PCA dapat membantu mengurangi jumlah fitur sehingga data yang awalnya memiliki banyak dimensi dapat divisualisasikan atau diproses dengan lebih sederhana.
+Hal yang menarik dari eksperimen Naive Bayes adalah model ini tidak membutuhkan proses yang serumit beberapa model lain, tetapi tetap dapat menghasilkan klasifikasi dengan cepat.
 
-Hal penting yang saya pahami adalah PCA tidak bertujuan melakukan klasifikasi. PCA lebih berfokus pada menemukan representasi data yang lebih ringkas.
+Saya juga mempelajari bahwa terdapat beberapa varian Naive Bayes, seperti **GaussianNB, BernoulliNB, dan MultinomialNB**. Masing-masing memiliki karakteristik data yang berbeda.
 
----
+Dari sini saya memahami bahwa memilih algoritma bukan hanya berdasarkan nama model, tetapi juga berdasarkan **bentuk data yang digunakan**.
 
-## 2.2 Non-negative Matrix Factorization (NMF)
+Buku menjelaskan bahwa Naive Bayes sangat cepat dalam training maupun prediksi dan dapat menjadi baseline yang baik, khususnya pada dataset besar dan berdimensi tinggi.
 
-NMF merupakan metode yang digunakan untuk mendapatkan representasi data dengan komponen yang bernilai non-negatif.
-
-Dari praktiknya, saya memahami bahwa NMF dapat digunakan untuk menemukan pola atau komponen yang membentuk data. Karena hasil komponennya tidak negatif, representasi yang dihasilkan dapat lebih mudah diinterpretasikan pada beberapa jenis data.
-
-Berbeda dengan model supervised, NMF tidak membutuhkan target kelas untuk menghasilkan representasi tersebut.
+**Pemahaman dari eksperimen:** kecepatan dan kesederhanaan dapat menjadi pertimbangan penting ketika dataset berukuran besar.
 
 ---
 
-## 2.3 t-SNE
+## 2.4 Decision Trees
 
-t-SNE digunakan terutama untuk **visualisasi data berdimensi tinggi** menjadi ruang dengan dimensi lebih rendah, biasanya dua dimensi.
+Decision Tree menurut saya merupakan salah satu model yang paling mudah dipahami secara visual.
 
-Pada praktiknya saya menggunakan **digits dataset** dan melakukan `fit_transform()` untuk mendapatkan representasi dua dimensi.
+Model membangun serangkaian pertanyaan atau kondisi **if/else** hingga menghasilkan keputusan. Pada eksperimen dengan dataset two-moons, saya dapat melihat bagaimana perubahan struktur tree memengaruhi pemisahan kelas.
 
-Hasil visualisasi membantu saya melihat bahwa data yang memiliki karakteristik mirip cenderung berada berdekatan pada representasi yang dihasilkan. Namun, saya juga memahami bahwa t-SNE lebih ditujukan untuk eksplorasi dan visualisasi daripada digunakan sebagai model prediksi.
+Parameter seperti `max_depth` menjadi penting karena menentukan seberapa dalam tree dapat berkembang.
 
----
+Jika tree terlalu dalam, model dapat menjadi sangat kompleks dan mengikuti training data secara berlebihan. Jika terlalu dangkal, model mungkin belum cukup mampu menangkap pola data.
 
-## 2.4 k-Means Clustering
+Buku menjelaskan bahwa Decision Tree mempelajari hierarki pertanyaan if/else dari data dan dapat digunakan untuk classification maupun regression.
 
-k-Means merupakan algoritma clustering yang mengelompokkan data berdasarkan kedekatannya terhadap sejumlah pusat cluster atau **centroid**.
-
-Dalam praktiknya saya menentukan jumlah cluster, kemudian menjalankan proses clustering dan memvisualisasikan hasilnya.
-
-Hal yang saya pahami adalah k-Means membutuhkan jumlah cluster yang ditentukan terlebih dahulu. Karena itu, pemilihan jumlah cluster menjadi salah satu hal penting ketika menggunakan algoritma ini.
+**Pemahaman dari eksperimen:** Decision Tree mudah dijelaskan kepada manusia, tetapi kedalaman tree perlu dikontrol agar kompleksitas model tetap sesuai.
 
 ---
 
-## 2.5 Agglomerative Clustering
+## 2.5 Random Forest
 
-Agglomerative Clustering merupakan metode **hierarchical clustering** yang membangun kelompok secara bertahap.
+Random Forest merupakan pengembangan dari konsep Decision Tree dengan menggunakan banyak tree.
 
-Pada praktiknya saya menggunakan `AgglomerativeClustering` dengan jumlah cluster tertentu dan membandingkan hasil pengelompokan dengan data awal.
+Dari eksperimen, saya memahami alasan mengapa ensemble dapat lebih stabil dibandingkan satu Decision Tree. Setiap tree dapat menghasilkan keputusan yang berbeda, kemudian hasilnya digabungkan.
 
-Dari eksperimen tersebut saya memahami bahwa algoritma ini memiliki pendekatan yang berbeda dari k-Means. Jika k-Means berpusat pada centroid, Agglomerative Clustering membangun struktur cluster secara hierarki.
+Dengan pendekatan tersebut, model tidak terlalu bergantung pada satu struktur tree.
 
----
+Namun, konsekuensinya adalah interpretasi model menjadi lebih sulit. Jika Decision Tree tunggal dapat divisualisasikan secara langsung, Random Forest terdiri dari banyak tree sehingga proses pengambilan keputusannya tidak sesederhana satu tree.
 
-## 2.6 DBSCAN
+Buku menjelaskan Random Forest sebagai model yang robust dan powerful serta tidak membutuhkan scaling data.
 
-DBSCAN merupakan algoritma clustering yang menggunakan konsep **kepadatan data**.
-
-Dalam praktiknya saya mencoba DBSCAN dan mengamati bagaimana data dapat dikelompokkan berdasarkan area yang memiliki kepadatan tertentu. Salah satu hal yang menarik adalah DBSCAN dapat mengenali data yang dianggap sebagai **noise/outlier**.
-
-Hal tersebut membuat DBSCAN berbeda dari k-Means karena DBSCAN tidak harus selalu memaksa setiap titik data masuk ke salah satu cluster.
+**Pemahaman dari eksperimen:** ensemble menunjukkan bahwa menggabungkan beberapa model yang relatif sederhana dapat menghasilkan sistem yang lebih kuat.
 
 ---
 
-# ⚖️ 3. Perbandingan Supervised dan Unsupervised Learning
+## 2.6 Kernelized SVM
 
-| Aspek             | Supervised Learning                                                                | Unsupervised Learning                                            |
-| ----------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| Label/Target      | Ada                                                                                | Tidak ada                                                        |
-| Tujuan            | Prediksi                                                                           | Menemukan pola/struktur                                          |
-| Contoh tugas      | Classification & Regression                                                        | Clustering & Dimensionality Reduction                            |
-| Evaluasi          | Dapat menggunakan target sebenarnya                                                | Lebih bergantung pada struktur/hasil clustering atau visualisasi |
-| Model yang dicoba | KNN, Linear Models, Naive Bayes, Decision Tree, Random Forest, SVM, Neural Network | PCA, NMF, t-SNE, k-Means, Agglomerative, DBSCAN                  |
-| Hasil utama       | Prediksi kelas atau nilai                                                          | Kelompok atau representasi data                                  |
+Kernelized SVM memberikan pemahaman yang berbeda mengenai bagaimana model dapat menangani pola data yang tidak linear.
 
----
+Pada eksperimen, saya menggunakan **RBF kernel** dan mengamati pengaruh `C` serta `gamma`.
 
-# 📊 4. Analisis Hasil Praktikum
+Parameter tersebut memengaruhi kompleksitas decision boundary. Perubahan parameter dapat membuat batas klasifikasi menjadi lebih fleksibel atau lebih sederhana.
 
-Setelah mencoba seluruh algoritma di Google Colab, saya memahami bahwa **tidak ada satu algoritma yang selalu cocok untuk semua jenis dataset**.
+Konsep **support vectors** juga menjadi bagian penting. Data tertentu memiliki peran besar dalam menentukan posisi decision boundary.
 
-Pada supervised learning, keberadaan label membuat proses pembelajaran lebih terarah. Model dapat dibandingkan menggunakan hasil prediksi terhadap target sebenarnya. Namun, model tetap perlu diuji pada data yang belum pernah dilihat agar dapat diketahui kemampuan generalisasinya.
+Dari eksperimen tersebut saya memahami bahwa SVM dapat menghasilkan batas klasifikasi yang kompleks, tetapi penggunaannya membutuhkan perhatian lebih terhadap parameter dan scaling data.
 
-Saya juga memahami bahwa kompleksitas model memiliki pengaruh terhadap hasil. Model sederhana seperti Linear Models relatif mudah dipahami, sedangkan Random Forest, SVM, dan Neural Network dapat menangani pola yang lebih kompleks tetapi membutuhkan perhatian lebih terhadap parameter dan karakteristik data.
+Buku juga menyebutkan bahwa SVM powerful untuk dataset berukuran sedang, tetapi sensitif terhadap parameter dan scaling.
 
-Pada unsupervised learning, tantangannya berbeda karena tidak tersedia label sebagai jawaban benar. Oleh karena itu, hasil yang diperoleh lebih banyak digunakan untuk memahami struktur data. Misalnya, k-Means, Agglomerative Clustering, dan DBSCAN sama-sama melakukan clustering tetapi menggunakan pendekatan yang berbeda. Sementara itu, PCA, NMF, dan t-SNE lebih berfokus pada representasi atau eksplorasi data.
-
-Dari keseluruhan praktikum, saya mendapatkan pemahaman bahwa **pemilihan algoritma harus disesuaikan dengan tujuan, karakteristik dataset, jumlah data, jumlah fitur, dan pola yang terdapat pada data**. Buku juga menekankan bahwa menerapkan algoritma secara langsung tanpa memahami asumsi model, representasi data, dan parameter dapat menghasilkan model yang kurang baik.
+**Pemahaman dari eksperimen:** SVM menunjukkan bahwa performa model tidak hanya ditentukan oleh algoritmanya, tetapi juga oleh konfigurasi parameter dan representasi data.
 
 ---
 
-# 💡 5. Insight yang Didapat
+## 2.7 Neural Networks / Deep Learning
 
-Beberapa hal penting yang saya dapatkan setelah melakukan praktik adalah:
+Neural Network menjadi model dengan konsep paling kompleks di antara supervised model yang dicoba.
 
-1. **Supervised dan unsupervised memiliki tujuan yang berbeda.** Supervised lebih berorientasi pada prediksi, sedangkan unsupervised digunakan untuk menemukan pola atau struktur.
+Dalam eksperimen menggunakan `MLPClassifier`, saya mencoba beberapa konfigurasi hidden layer, jumlah neuron, fungsi aktivasi, dan nilai `alpha`.
 
-2. **Dataset sangat menentukan algoritma yang digunakan.** Algoritma yang bagus pada satu dataset belum tentu memberikan hasil yang sama pada dataset lain.
+Perubahan konfigurasi tersebut dapat mengubah bentuk decision boundary. Artinya, arsitektur jaringan memiliki hubungan langsung dengan kemampuan model dalam mempelajari pola.
 
-3. **Parameter model memiliki pengaruh besar.** Contohnya nilai K pada KNN, `alpha` pada Ridge dan Neural Network, `max_depth` pada Decision Tree, serta `C` dan `gamma` pada SVM.
+Namun, model yang lebih kompleks juga membutuhkan perhatian lebih terhadap parameter. Jika konfigurasi tidak sesuai, model tidak otomatis menghasilkan hasil yang lebih baik.
 
-4. **Preprocessing dan scaling penting untuk beberapa algoritma.** SVM dan Neural Network khususnya sensitif terhadap scaling data, sedangkan Decision Tree dan Random Forest tidak memerlukannya dalam cara yang sama.
+Buku menjelaskan bahwa neural networks dapat membangun model yang sangat kompleks, tetapi sensitif terhadap scaling dan pemilihan parameter.
 
-5. **Visualisasi membantu memahami perilaku model.** Decision boundary pada supervised learning serta visualisasi hasil clustering dan t-SNE membuat konsep yang sebelumnya abstrak menjadi lebih mudah dipahami.
-
-6. **Model yang kompleks tidak selalu menjadi pilihan pertama.** Dari pembelajaran ini saya memahami bahwa model sederhana dapat digunakan terlebih dahulu sebagai baseline sebelum mencoba model yang lebih kompleks. Buku juga menyarankan memulai dari model sederhana kemudian mempertimbangkan model yang lebih kompleks setelah karakteristik data lebih dipahami.
+**Pemahaman dari eksperimen:** Neural Network memberikan fleksibilitas tinggi, tetapi fleksibilitas tersebut juga meningkatkan kebutuhan terhadap tuning dan pemahaman model.
 
 ---
 
-# 🚀 6. Kesimpulan
+# 🔎 3. Analisis Antar-Model Supervised
 
-Pembelajaran 13 algoritma Machine Learning melalui Google Colab memberikan pemahaman dasar mengenai dua pendekatan utama, yaitu **Supervised Learning** dan **Unsupervised Learning**.
+Jika dibandingkan, ketujuh model supervised yang dicoba menunjukkan bahwa terdapat **trade-off antara kesederhanaan, fleksibilitas, interpretasi, dan kebutuhan komputasi**.
 
-Supervised Learning yang dipelajari terdiri dari **KNN, Linear Models, Naive Bayes, Decision Trees, Random Forest, Kernelized SVM, dan Neural Networks**. Model-model tersebut digunakan ketika tersedia target atau label dan dapat digunakan untuk tugas klasifikasi maupun regresi.
+KNN relatif mudah dipahami, Linear Models sederhana, Naive Bayes cepat, Decision Tree mudah divisualisasikan, Random Forest lebih robust, SVM mampu membuat decision boundary kompleks, sedangkan Neural Network memiliki fleksibilitas yang sangat tinggi.
 
-Sementara itu, Unsupervised Learning terdiri dari **PCA, NMF, t-SNE, k-Means, Agglomerative Clustering, dan DBSCAN**. Algoritma tersebut digunakan untuk memahami struktur data tanpa bergantung pada label target.
+Hal ini membuat saya memahami bahwa memilih model tidak seharusnya hanya berdasarkan model yang terlihat paling kompleks.
 
-Melalui implementasi di Google Colab, saya tidak hanya mempelajari sintaks Python dan penggunaan `scikit-learn`, tetapi juga mulai memahami bahwa Machine Learning bukan hanya tentang menjalankan model. Hal yang lebih penting adalah **memahami karakteristik data, tujuan permasalahan, parameter model, hasil eksperimen, serta alasan memilih suatu algoritma**.
+Secara konseptual, proses pemilihan model dapat dilakukan seperti:
+
+```text
+Pahami dataset
+      ↓
+Tentukan masalah
+      ↓
+Coba model sederhana
+      ↓
+Evaluasi hasil
+      ↓
+Analisis kekurangan
+      ↓
+Coba model yang lebih kompleks
+      ↓
+Bandingkan hasil
+```
+
+Pendekatan ini juga sesuai dengan pembahasan buku yang menyarankan untuk memulai dari model sederhana sebelum berpindah ke model yang lebih kompleks.
 
 ---
 
-## 📚 Referensi
+# 🧩 4. Analisis Unsupervised Learning
 
-* Müller, A. C., & Guido, S. (2017). *Introduction to Machine Learning with Python: A Guide for Data Scientists*. O'Reilly Media.
-* Dokumentasi dan implementasi algoritma menggunakan Python dan `scikit-learn`.
+## 4.1 Konsep Dasar
+
+Unsupervised learning memiliki kondisi yang berbeda karena tidak menggunakan target sebagai jawaban yang harus diprediksi.
+
+Dari eksperimen yang dilakukan, saya melihat bahwa unsupervised learning dapat dibagi menjadi dua tujuan besar:
+
+### Dimensionality Reduction / Representation
+
+* PCA
+* NMF
+* t-SNE
+
+### Clustering
+
+* k-Means
+* Agglomerative Clustering
+* DBSCAN
+
+Karena tidak terdapat label sebagai jawaban benar, analisis hasilnya juga berbeda dengan supervised learning.
+
+---
+
+# 5. Analisis Setiap Model Unsupervised
+
+## 5.1 PCA
+
+PCA digunakan untuk mengurangi dimensi data dengan mencari representasi baru yang lebih ringkas.
+
+Dari praktik PCA, saya memahami bahwa jumlah fitur yang banyak tidak selalu berarti informasi yang diperoleh lebih mudah dipahami.
+
+PCA membantu menyederhanakan representasi data sehingga hubungan atau pola tertentu dapat lebih mudah diamati.
+
+Namun, hasil PCA berupa komponen baru sehingga interpretasi setiap komponen tidak selalu langsung sama dengan fitur asli.
+
+**Pemahaman dari eksperimen:** reduksi dimensi dapat membantu mengatasi kompleksitas data tanpa harus langsung membuang seluruh informasi dari dataset.
+
+---
+
+## 5.2 NMF
+
+NMF memiliki tujuan yang mirip dengan PCA dalam hal menemukan representasi data yang lebih sederhana, tetapi menggunakan pendekatan yang berbeda.
+
+Hal penting yang saya pahami adalah NMF menghasilkan komponen non-negatif. Karakteristik tersebut membuat NMF menarik ketika representasi berupa bagian-bagian atau kontribusi positif lebih mudah diinterpretasikan.
+
+Dengan demikian, PCA dan NMF sama-sama dapat digunakan untuk mendapatkan representasi baru, tetapi konsep matematis dan karakteristik hasilnya berbeda.
+
+**Pemahaman dari eksperimen:** dua algoritma yang sama-sama melakukan reduksi atau ekstraksi representasi belum tentu memberikan representasi yang sama.
+
+---
+
+## 5.3 t-SNE
+
+t-SNE merupakan algoritma yang lebih diarahkan untuk **visualisasi data berdimensi tinggi**.
+
+Pada eksperimen menggunakan digits dataset, data yang memiliki banyak fitur direpresentasikan menjadi dua dimensi.
+
+Hasil tersebut membantu melihat apakah data tertentu membentuk kelompok yang secara visual terlihat berdekatan.
+
+Namun, saya memahami bahwa t-SNE tidak sama dengan clustering. Jika terlihat beberapa kelompok pada visualisasi t-SNE, hal tersebut tidak otomatis berarti algoritma telah memberikan label cluster.
+
+Buku juga menjelaskan bahwa t-SNE terutama digunakan untuk visualisasi dan tidak menyediakan metode `transform` untuk menerapkan representasi yang sama pada data baru.
+
+**Pemahaman dari eksperimen:** visualisasi dapat membantu memahami struktur data, tetapi visualisasi tidak boleh langsung dianggap sebagai hasil klasifikasi.
+
+---
+
+# 6. Analisis Clustering
+
+## 6.1 k-Means
+
+k-Means mengelompokkan data berdasarkan kedekatan terhadap centroid.
+
+Dari praktiknya, saya memahami bahwa pengguna harus menentukan jumlah cluster terlebih dahulu. Hal ini menjadi salah satu perbedaan penting dibandingkan algoritma seperti DBSCAN.
+
+Kelebihan pendekatan ini adalah konsepnya sederhana dan hasilnya relatif mudah divisualisasikan.
+
+Namun, ketika jumlah cluster yang ditentukan tidak sesuai dengan struktur sebenarnya, hasil pengelompokan juga dapat menjadi kurang representatif.
+
+**Pemahaman dari eksperimen:** k-Means cocok ketika kita mempunyai alasan atau analisis tertentu mengenai jumlah kelompok yang ingin dicari.
+
+---
+
+## 6.2 Agglomerative Clustering
+
+Agglomerative Clustering menggunakan pendekatan hierarchical clustering.
+
+Berbeda dari k-Means yang menggunakan centroid sebagai pusat cluster, Agglomerative Clustering membangun kelompok secara bertahap berdasarkan hubungan antar data.
+
+Dari eksperimen, saya memahami bahwa algoritma ini memberikan sudut pandang yang berbeda terhadap struktur kelompok. Data tidak hanya dipandang sebagai kumpulan titik terhadap pusat cluster, tetapi dapat dipahami sebagai struktur hierarki.
+
+Buku membahas Agglomerative Clustering sebagai hierarchical clustering dan juga membahas pilihan linkage yang memengaruhi proses penggabungan cluster.
+
+**Pemahaman dari eksperimen:** cara mendefinisikan hubungan antar data dapat menghasilkan struktur clustering yang berbeda.
+
+---
+
+## 6.3 DBSCAN
+
+DBSCAN menggunakan konsep **kepadatan data**.
+
+Dari eksperimen, saya memahami bahwa DBSCAN memiliki karakteristik yang berbeda dari k-Means karena dapat mengidentifikasi data yang berada di area dengan kepadatan rendah sebagai noise.
+
+Hal tersebut berguna ketika dataset memiliki bentuk cluster yang tidak sederhana.
+
+Namun, hasil DBSCAN sangat dipengaruhi oleh parameter seperti `eps` dan `min_samples`. Oleh karena itu, parameter tersebut perlu disesuaikan dengan karakteristik dataset.
+
+**Pemahaman dari eksperimen:** clustering tidak selalu harus berdasarkan centroid. Kepadatan data juga dapat digunakan untuk menentukan struktur kelompok.
+
+---
+
+# ⚖️ 7. Perbandingan Unsupervised Learning
+
+| Algoritma     | Pendekatan                | Hal yang Dipelajari                            |
+| ------------- | ------------------------- | ---------------------------------------------- |
+| PCA           | Reduksi dimensi           | Mencari representasi data yang lebih sederhana |
+| NMF           | Representasi fitur        | Membentuk komponen non-negatif                 |
+| t-SNE         | Manifold learning         | Memvisualisasikan struktur lokal data          |
+| k-Means       | Centroid-based clustering | Mengelompokkan berdasarkan kedekatan centroid  |
+| Agglomerative | Hierarchical clustering   | Membangun cluster secara bertahap              |
+| DBSCAN        | Density-based clustering  | Mencari kelompok berdasarkan kepadatan         |
+
+Buku sendiri mengelompokkan k-Means, Agglomerative Clustering, dan DBSCAN sebagai metode clustering, sedangkan t-SNE berada pada bagian manifold learning dan PCA/NMF pada dimensionality reduction serta feature extraction.
+
+---
+
+# 🔬 8. Analisis Perbandingan Supervised vs Unsupervised
+
+Perbedaan paling mendasar yang saya pahami setelah melakukan praktik adalah **tujuan pembelajarannya**.
+
+Pada supervised learning, saya sudah mengetahui target yang ingin diprediksi. Karena itu, saya dapat membandingkan hasil prediksi dengan target sebenarnya.
+
+Pada unsupervised learning, saya tidak memiliki jawaban yang harus diprediksi. Saya justru mencoba menemukan struktur yang terdapat dalam data.
+
+Contohnya:
+
+```text
+SUPERVISED
+Data → Model → Prediksi → Bandingkan dengan Label
+
+UNSUPERVISED
+Data → Model → Struktur/Pola → Analisis
+```
+
+Hal ini menyebabkan proses evaluasinya juga berbeda.
+
+Pada supervised learning, score seperti accuracy atau R² dapat digunakan tergantung jenis permasalahannya. Sedangkan pada unsupervised learning, hasil perlu dilihat dari struktur cluster, visualisasi, atau metrik clustering tertentu.
+
+---
+
+# 📈 9. Analisis Kompleksitas Model
+
+Dari seluruh eksperimen, saya melihat adanya pola bahwa **semakin fleksibel sebuah model, semakin besar pula kebutuhan untuk mengatur kompleksitasnya**.
+
+Contohnya:
+
+* KNN → `n_neighbors`
+* Linear/Ridge → `alpha`
+* Decision Tree → `max_depth`
+* SVM → `C` dan `gamma`
+* Neural Network → hidden layers, jumlah neuron, activation, `alpha`
+* k-Means → jumlah cluster
+* DBSCAN → `eps` dan `min_samples`
+
+Parameter tersebut bukan sekadar angka tambahan dalam kode. Parameter menentukan **bagaimana model memandang pola data**.
+
+Karena itu, salah satu pelajaran penting dari praktikum ini adalah bahwa menjalankan:
+
+```python
+model.fit(X_train, y_train)
+```
+
+belum berarti proses Machine Learning sudah selesai.
+
+Masih diperlukan:
+
+```text
+Training
+   ↓
+Evaluasi
+   ↓
+Analisis hasil
+   ↓
+Tuning parameter
+   ↓
+Evaluasi kembali
+```
+
+---
+
+# 🧠 10. Hal yang Paling Saya Pahami dari Praktikum
+
+Setelah mencoba 13 algoritma, saya mendapatkan beberapa pemahaman yang lebih jelas dibandingkan hanya mempelajari teori.
+
+### 1. Tidak ada satu algoritma yang cocok untuk semua masalah
+
+Setiap algoritma memiliki asumsi dan karakteristik yang berbeda. Karena itu, pemilihan algoritma harus melihat bentuk data dan tujuan permasalahan.
+
+### 2. Parameter dapat mengubah perilaku model
+
+Percobaan terhadap `max_depth`, `alpha`, `C`, `gamma`, hidden layer, jumlah cluster, dan parameter lainnya menunjukkan bahwa parameter memiliki pengaruh terhadap kompleksitas model.
+
+### 3. Model sederhana tetap penting
+
+Model sederhana dapat digunakan sebagai **baseline**. Jika model sederhana sudah memberikan hasil yang baik, kita memiliki dasar untuk membandingkan apakah model yang lebih kompleks benar-benar memberikan peningkatan.
+
+### 4. Visualisasi membantu memahami Machine Learning
+
+Decision boundary, hasil PCA, visualisasi t-SNE, dan hasil clustering membuat saya lebih mudah memahami bagaimana model melihat data.
+
+### 5. Menjalankan kode berbeda dengan memahami model
+
+Hal paling penting dari praktikum ini adalah saya mulai memahami bahwa Machine Learning bukan sekadar menggunakan library `scikit-learn`.
+
+Saya perlu mengetahui:
+
+* data apa yang digunakan,
+* apakah data memiliki label,
+* tujuan model,
+* parameter yang digunakan,
+* hasil yang diperoleh,
+* kemungkinan overfitting atau underfitting,
+* serta alasan mengapa model tersebut digunakan.
+
+---
+
+# 🎯 11. Kesimpulan
+
+Eksperimen terhadap 13 algoritma memberikan gambaran bahwa Machine Learning memiliki berbagai pendekatan untuk menyelesaikan permasalahan yang berbeda.
+
+**Supervised Learning** lebih terarah karena model belajar menggunakan target. Dari tujuh model yang dicoba, saya melihat perbedaan pendekatan mulai dari model sederhana seperti Linear Models dan KNN sampai model yang lebih kompleks seperti Random Forest, SVM, dan Neural Networks.
+
+**Unsupervised Learning** memiliki tantangan yang berbeda karena tidak terdapat target sebagai jawaban. PCA, NMF, dan t-SNE membantu memahami representasi atau struktur data, sedangkan k-Means, Agglomerative Clustering, dan DBSCAN mencoba menemukan kelompok dalam data dengan pendekatan yang berbeda.
+
+Secara keseluruhan, hasil praktikum membuat saya memahami bahwa **Machine Learning bukan tentang mencari algoritma yang paling kompleks, tetapi tentang memilih pendekatan yang sesuai dengan data dan tujuan permasalahan**.
+
+Sebagai mahasiswa semester 5 yang sedang mempelajari Machine Learning, pemahaman ini menjadi dasar penting sebelum masuk ke tahap yang lebih lanjut seperti **feature engineering, model evaluation, hyperparameter tuning, pipeline, dan penerapan model pada dataset nyata**.
+
+---
+
+# 📚 Referensi
+
+Müller, A. C., & Guido, S. (2017). *Introduction to Machine Learning with Python: A Guide for Data Scientists*. O'Reilly Media.
+
+Materi eksperimen menggunakan Python, Google Colab, dan `scikit-learn`.

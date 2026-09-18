@@ -432,7 +432,7 @@ Sebagai mahasiswa semester 5 yang sedang mempelajari Machine Learning, pemahaman
 
 ---
 
-# 📚 Referensi
+# Referensi
 
 Müller, A. C., & Guido, S. (2017). *Introduction to Machine Learning with Python: A Guide for Data Scientists*. O'Reilly Media.
 
